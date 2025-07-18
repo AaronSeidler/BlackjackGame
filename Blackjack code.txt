@@ -1,0 +1,61 @@
+using System;
+
+class Blackjack {
+    static void Main() {
+        int spielerKarte = 0;
+        int dealerKarte = 0;
+        Random random = new Random();
+
+        Console.WriteLine("Herzlich Willkommen zum Blackjack Spiel");
+
+        while (true) {
+            spielerKarte = random.Next(2, 11) + random.Next(2, 11);
+            dealerKarte = random.Next(2, 11) + random.Next(2, 11);
+            Console.WriteLine($"Deine Karten haben einen Wert von {spielerKarte}");
+
+            while (true) {
+                Console.WriteLine("Willst du noch eine Karte ziehen? (ja/nein)");
+                string eingabe = Console.ReadLine();
+
+                if (eingabe.ToLower() == "ja") {
+                    int neueKarte = random.Next(2, 12);
+                    spielerKarte += neueKarte;
+                    Console.WriteLine($"Du hast eine {neueKarte} gezogen. Dein neuer Wert ist {spielerKarte}");
+
+                    if (spielerKarte > 21) {
+                        Console.WriteLine("Du hast über 21! Du hast verloren.");
+                        break;
+                    }
+                } else if (eingabe.ToLower() == "nein") {
+                    break;
+                } else {
+                    Console.WriteLine("Ungültige Eingabe. Bitte 'ja' oder 'nein' eingeben.");
+                }
+            }
+
+            if (spielerKarte <= 21) {
+                while (dealerKarte < 17) {
+                    int neueKarte = random.Next(2, 11);
+                    dealerKarte += neueKarte;
+                }
+                Console.WriteLine($"Der Dealer hat einen Kartenwert von {dealerKarte}");
+
+                if (dealerKarte > 21) {
+                    Console.WriteLine("Der Dealer hat über 21! Du gewinnst!");
+                } else if (spielerKarte > dealerKarte) {
+                    Console.WriteLine("Du gewinnst!");
+                } else if (dealerKarte > spielerKarte) {
+                    Console.WriteLine("Der Dealer gewinnt.");
+                } else {
+                    Console.WriteLine("Unentschieden!");
+                }
+            }
+
+            Console.WriteLine("Möchtest du erneut spielen? (ja/nein)");
+            string antwort = Console.ReadLine();
+            if (antwort.ToLower() == "nein") {
+                break;
+            }
+        }
+    }
+}
